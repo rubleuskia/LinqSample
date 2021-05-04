@@ -4,9 +4,9 @@ namespace AnalyticsAdapter
 {
     public class Database
     {
-        public List<Customer> Customers { get; set; }
-        public List<Order> Orders { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Customer> Customers { get; set; } = new();
+        public List<Order> Orders { get; set; } = new();
+        public List<Product> Products { get; set; } = new();
 
         public Database()
         {
