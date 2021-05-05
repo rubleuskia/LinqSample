@@ -6,9 +6,9 @@ namespace AnalyticsAdapter
 {
     public class Repository : IRepository
     {
-        private readonly Database _db;
+        private readonly IDatabase _db;
 
-        public Repository(Database db)
+        public Repository(IDatabase db)
         {
             _db = db;
         }
@@ -55,7 +55,6 @@ namespace AnalyticsAdapter
                 Name = name,
                 TotalMoneySpent = GetMoneySpentBy(customerId),
                 FavoriteProductName = GetFavoriteProductName(customerId),
-                //
             };
         }
 

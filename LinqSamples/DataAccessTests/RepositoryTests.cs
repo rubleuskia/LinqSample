@@ -1,6 +1,8 @@
 ﻿using AnalyticsAdapter;
+using FluentAssertions;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace DataAccessTests
@@ -10,15 +12,45 @@ namespace DataAccessTests
         [Fact]
         public void Test()
         {
-            var mock = new Mock<IRepository>();
-            mock.Setup(foo => foo.AreAllPurchasesHigherThan(1, 100))
-                .Returns(true);
+            var mock = new Mock<IDatabase>();
+            mock.Setup(foo => foo.Customers).Returns(new List<Customer>
+            {
+                new Customer(1, "John")
+            });
 
-            // var db = new Database();
-            // var repository = new Repository(db);
-            var result = mock.Object.AreAllPurchasesHigherThan(1, 100);
+            mock.Setup(foo => foo.Orders).Returns(new List<Order>
+            {
+                new Order(2, 2, 2)
+            });
 
-            Assert.True(result);
+
+            var sut = new Repository(mock.Object);
+            var result = sut.GetOrders(1);
+
+            Assert.Empty(result);
+        }
+
+        [Theory]
+        [InlineData(1, 10)]
+        [InlineData(2, 20)]
+        public void TestTheory(int customerId, int count)
+        {
+            var mock = new Mock<IDatabase>();
+            mock.Setup(foo => foo.Customers).Returns(new List<Customer>
+            {
+                new Customer(1, "John")
+            });
+
+            mock.Setup(foo => foo.Orders).Returns(new List<Order>
+            {
+                new Order(2, 2, 2)
+            });
+
+
+            var sut = new Repository(mock.Object);
+            var result = sut.GetOrders(customerId);
+
+            result.Length.Should().Be(count);
         }
     }
 }
