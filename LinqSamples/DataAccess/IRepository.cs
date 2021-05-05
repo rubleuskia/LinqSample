@@ -22,7 +22,7 @@ namespace AnalyticsAdapter
 
         public Order GetOrder(int orderId)
         {
-            var order = _db.Orders.SingleOrDefault(order => order.Id == orderId);
+            var order = _db.Orders.SingleOrDefault(order1 => order1.Id == orderId);
             if (order == null)
             {
                 throw new InvalidOperationException();

@@ -1,10 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExamples", "LinqExamples\LinqExamples.csproj", "{BF4CEC1D-D2E1-4546-B34A-505F0B3A7ED0}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1500
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExamples", "LinqExamples\LinqExamples.csproj", "{BF4CEC1D-D2E1-4546-B34A-505F0B3A7ED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{AACA8B09-60E0-4B88-90AE-42580F26B900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{AACA8B09-60E0-4B88-90AE-42580F26B900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyticsProgram", "AnalyticsProgram\AnalyticsProgram.csproj", "{9589ACB9-592B-4AFE-A5F7-DC2B42524AE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyticsProgram", "AnalyticsProgram\AnalyticsProgram.csproj", "{9589ACB9-592B-4AFE-A5F7-DC2B42524AE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{3ABDCD82-CDA0-4424-A6FD-96217F8D55CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +29,15 @@ Global
 		{9589ACB9-592B-4AFE-A5F7-DC2B42524AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9589ACB9-592B-4AFE-A5F7-DC2B42524AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9589ACB9-592B-4AFE-A5F7-DC2B42524AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ABDCD82-CDA0-4424-A6FD-96217F8D55CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ABDCD82-CDA0-4424-A6FD-96217F8D55CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ABDCD82-CDA0-4424-A6FD-96217F8D55CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ABDCD82-CDA0-4424-A6FD-96217F8D55CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BD39A031-6DBE-4191-9728-A001ADDE8117}
 	EndGlobalSection
 EndGlobal

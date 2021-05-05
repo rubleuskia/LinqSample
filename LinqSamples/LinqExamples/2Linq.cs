@@ -124,12 +124,12 @@ namespace Linq2
             //-------------------
             string[] teams = { "Бавария", "Боруссия", "Реал Мадрид", "Манчестер Сити", "ПСЖ", "Барселона" };
 
-            foreach (var t in teams.SkipWhile(x => x.StartsWith("Б")))
+            foreach (var t in teams.SkipWhile(x2 => x2.StartsWith("Б")))
             {
                 Console.WriteLine(t);
             }
 
-            foreach (var t in teams.TakeWhile(x => x.StartsWith("Б")))
+            foreach (var t in teams.TakeWhile(x3 => x3.StartsWith("Б")))
             {
                 Console.WriteLine(t);
             }

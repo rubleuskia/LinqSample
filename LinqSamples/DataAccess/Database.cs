@@ -6,7 +6,7 @@ namespace AnalyticsAdapter
     {
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<Order> Orders { get; set; } = new List<Order>();
-        public List<Product> Products { get; set; } = new List<Product>()
+        public List<Product> Products { get; set; } = new List<Product>();
 
         public Database()
         {
