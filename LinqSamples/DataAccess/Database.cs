@@ -2,7 +2,14 @@ using System.Collections.Generic;
 
 namespace AnalyticsAdapter
 {
-    public class Database
+    public interface IDatabase
+    {
+        List<Customer> Customers { get; set; }
+        List<Order> Orders { get; set; }
+        List<Product> Products { get; set; }
+    }
+
+    public class Database : IDatabase
     {
         public List<Customer> Customers { get; set; } = new List<Customer>();
         public List<Order> Orders { get; set; } = new List<Order>();
@@ -10,7 +17,7 @@ namespace AnalyticsAdapter
 
         public Database()
         {
-            Customers.AddRange(new []
+            Customers.AddRange(new[]
             {
                 new Customer(1, "Mike"),
                 new Customer(2, "John"),
@@ -18,7 +25,7 @@ namespace AnalyticsAdapter
                 new Customer(4, "Nick"),
             });
 
-            Products.AddRange(new []
+            Products.AddRange(new[]
             {
                 new Product(1, "Phone", 500),
                 new Product(2, "Notebook", 1000),
@@ -26,7 +33,7 @@ namespace AnalyticsAdapter
                 new Product(4, "XBox", 800),
             });
 
-            Orders.AddRange(new []
+            Orders.AddRange(new[]
             {
                 new Order(1, 1, 1),
                 new Order(2, 1, 1),
