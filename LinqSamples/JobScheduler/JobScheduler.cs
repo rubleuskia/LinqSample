@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 
 namespace JobScheduler
 {
-    interface IJob
-    {
-        void Execute(DateTime signalTime);
-    }
-
     public class JobScheduler
     {
         private readonly Timer _timer;
-        private readonly List<Action<DateTime>> _actions = new();
+        private readonly List<IJob> _jobs = new();
+        private readonly List<IDelayedJob> _delayedJobs = new();
 
         public JobScheduler(int intervalMs)
         {
@@ -22,9 +19,14 @@ namespace JobScheduler
             _timer.Enabled = false;
         }
 
-        public void AddHandler(Action<DateTime> action)
+        public void RegisterJob(IJob job)
         {
-            _actions.Add(action);
+            _jobs.Add(job);
+        }
+
+        public void RegisterJob(IDelayedJob job)
+        {
+            _delayedJobs.Add(job);
         }
 
         public void Start() => _timer.Start();
@@ -32,9 +34,38 @@ namespace JobScheduler
 
         private void OnTimedEvent(object sender, ElapsedEventArgs @event)
         {
-            foreach (var action in _actions)
+            ExecuteSimpleJobs(@event);
+            ExecuteDelayedJobs(@event);
+        }
+
+        private void ExecuteSimpleJobs(ElapsedEventArgs @event)
+        {
+            ExecuteJobs(_jobs, @event.SignalTime);
+        }
+
+        private void ExecuteDelayedJobs(ElapsedEventArgs @event)
+        {
+            ExecuteJobs(_delayedJobs.Select(x => x as IJob), @event.SignalTime);
+        }
+
+        private void ExecuteJobs(IEnumerable<IJob> jobs, DateTime startAt)
+        {
+            foreach (var job in jobs.Where(x => x.ShouldRun(startAt)))
             {
-                action?.Invoke(@event.SignalTime);
+                ExecuteJob(job, startAt);
+            }
+        }
+
+        private void ExecuteJob(IJob job, DateTime signalTime)
+        {
+            try
+            {
+                job.Execute(signalTime);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                job.MarkAsFailed();
             }
         }
     }
