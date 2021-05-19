@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using AnalyticsProgram.Utils;
 
 namespace AnalyticsProgram.Jobs
@@ -9,10 +11,16 @@ namespace AnalyticsProgram.Jobs
         {
         }
 
-        public override void Execute(DateTime signalTime)
+        public override async Task Execute(DateTime signalTime)
         {
-            base.Execute(signalTime);
-            WebsiteUtils.Download("https://tut.by", "tutby.txt");
+            Console.WriteLine("Thread start");
+            // Thread.Sleep(3000);
+            Console.WriteLine("Thread after sleep");
+            // Task.Delay(5000);
+            Console.WriteLine("Thread after delay");
+
+           // await base.Execute(signalTime);
+            // WebsiteUtils.Download("https://tut.by", "tutby.txt");
         }
     }
 }

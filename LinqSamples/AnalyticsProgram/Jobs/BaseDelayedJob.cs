@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using JobScheduler;
 
 namespace AnalyticsProgram.Jobs
@@ -13,14 +14,16 @@ namespace AnalyticsProgram.Jobs
             _startAt = signalTime;
         }
 
-        public override void Execute(DateTime signalTime)
+        public override Task Execute(DateTime signalTime)
         {
             _hasRun = true;
+            return Task.CompletedTask;
         }
 
-        public override bool ShouldRun(DateTime signalTime)
+        public override async Task<bool> ShouldRun(DateTime signalTime)
         {
-            return base.ShouldRun(signalTime) && _startAt < signalTime && !_hasRun;
+            bool baseResult = await base.ShouldRun(signalTime);
+            return baseResult && _startAt < signalTime && !_hasRun;
         }
     }
 }

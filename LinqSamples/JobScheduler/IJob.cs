@@ -1,11 +1,12 @@
 using System;
+using System.Threading.Tasks;
 
 namespace JobScheduler
 {
     public interface IJob
     {
-        void Execute(DateTime signalTime);
-        bool ShouldRun(DateTime signalTime);
+        Task Execute(DateTime signalTime);
+        Task<bool> ShouldRun(DateTime signalTime);
         void MarkAsFailed();
     }
 }
