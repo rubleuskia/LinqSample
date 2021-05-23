@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace AnalyticsAdapter
 {
-    public class Database
+    public class Database : IDatabase
     {
         public List<Customer> Customers { get; set; } = new();
         public List<Order> Orders { get; set; } = new();

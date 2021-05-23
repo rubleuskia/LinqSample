@@ -4,6 +4,8 @@ namespace AnalyticsAdapter
 {
     public interface IRepository
     {
+        void AddOrder(int customerId, int productId);
+        
         Order[] GetOrders(int customerId);
 
         Order GetOrder(int orderId);
