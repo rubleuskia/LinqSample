@@ -5,7 +5,12 @@ namespace AnalyticsAdapter
 {
     public class Repository : IRepository
     {
-        private static readonly Database _db = new();
+        private readonly IDatabase _db;
+
+        public Repository(IDatabase db)
+        {
+            _db = db;
+        }
         
         public Order[] GetOrders(int customerId)
         {
@@ -121,6 +126,11 @@ namespace AnalyticsAdapter
                     (order, product) => product)
                 .GroupBy(product => product.Id)
                 .Select(g => (g.First().Name, g.Count())).ToList();
+        }
+
+        public void AddOrder(int customerId, int productId)
+        {
+            _db.Orders.Add(new Order(_db.Orders.Count + 1, customerId, productId));
         }
     }
 }
