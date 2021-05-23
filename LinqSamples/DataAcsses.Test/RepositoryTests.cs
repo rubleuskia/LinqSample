@@ -25,7 +25,7 @@ namespace DataAcsses.Test
             Order orders = repository.GetOrder(1);
 
             //assert
-            Assert.Empty();
+            Assert.NotEmpty();
         }
 
         [Fact]
