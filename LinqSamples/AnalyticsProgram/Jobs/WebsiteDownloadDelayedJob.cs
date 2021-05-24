@@ -11,7 +11,7 @@ namespace AnalyticsProgram.Jobs
         {
         }
 
-        public override async Task Execute(DateTime signalTime)
+        public override async Task Execute(DateTime signalTime, CancellationToken token)
         {
             Console.WriteLine("Thread start");
             // Thread.Sleep(3000);

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace JobScheduler
 {
@@ -11,6 +13,8 @@ namespace JobScheduler
         private readonly Timer _timer;
         private readonly List<IJob> _jobs = new();
         private readonly List<IDelayedJob> _delayedJobs = new();
+        private CancellationTokenSource _tokenSource;
+        private IConsoleWrapper _console = new ConsoleWrapper();
 
         public JobScheduler(int intervalMs)
         {
@@ -30,12 +34,31 @@ namespace JobScheduler
             _delayedJobs.Add(job);
         }
 
-        public void Start() => _timer.Start();
-        public void Stop() => _timer.Stop();
+        public void CancelJobs()
+        {
+            _tokenSource.Cancel();
+        }
+
+        public void Start()
+        {
+            _tokenSource = new CancellationTokenSource();
+            _timer.Start();
+        }
+
+        public void Stop()
+        {
+            CancelJobs();
+            _timer.Stop();
+        }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs @event)
         {
-            OnTimedEventAsync(@event);
+            if (_tokenSource.Token.IsCancellationRequested)
+            {
+                _tokenSource = new CancellationTokenSource();
+            }
+
+            OnTimedEventAsync(@event).GetAwaiter().GetResult();
         }
 
         private async Task OnTimedEventAsync(ElapsedEventArgs @event)
@@ -71,11 +94,16 @@ namespace JobScheduler
         {
             try
             {
-                await job.Execute(signalTime);
+                await job.Execute(signalTime, _tokenSource.Token);
             }
+            catch (OperationCanceledException e)
+            {
+                _console.WriteLine($"Operation was cancelled with exception. {e.Message}");
+            }
+
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _console.WriteLine(e.Message);
                 job.MarkAsFailed();
             }
         }
